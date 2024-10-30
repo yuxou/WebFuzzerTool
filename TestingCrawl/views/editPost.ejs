@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 수정 - 테스트 웹 애플리케이션</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<%- include('partials/navbar') %>
+<div class="container mt-4">
+    <h1>게시글 수정</h1>
+    <form action="/posts/edit/<%= post.id %>" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" class="form-control" id="title" name="title" value="<%= post.title %>" required>
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" id="content" name="content" rows="5" required><%= post.content %></textarea>
+        </div>
+
+        <!-- 기존 파일 표시 -->
+        <% if (post.filePath) { %>
+            <div class="mb-3">
+                <label class="form-label">현재 파일</label>
+                <p class="form-control-plaintext">
+                    <a href="/<%= post.filePath %>" download><%= post.filePath.split('/').pop() %></a>
+                </p>
+            </div>
+        <% } %>
+
+        <!-- 파일 업로드 입력 -->
+        <div class="mb-3">
+            <label for="file" class="form-label">파일 업로드 (새 파일 선택 시 기존 파일이 대체됩니다.)</label>
+            <input type="file" class="form-control" id="file" name="file">
+        </div>
+
+        <button type="submit" class="btn btn-primary">수정</button>
+        <a href="/postDetail/<%= post.id %>" class="btn btn-secondary">취소</a>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/scripts.js"></script>
+</body>
+</html>
